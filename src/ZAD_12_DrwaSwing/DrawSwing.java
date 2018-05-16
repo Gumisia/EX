@@ -1,23 +1,13 @@
 package ZAD_12_DrwaSwing;
 
 import java.awt.*;
-import java.util.Scanner;
 import javax.swing.*;
 
 public class DrawSwing {
 
 
-
     public static void main(String[] args)
     {
-
-//        static int x;
-//        static int y;
-//        Scanner odczyt = new Scanner(System.in);
-//        System.out.println("Podaj x: ");
-//        x = odczyt.nextInt();
-//        System.out.println("\nPodaj y: ");
-//        y = odczyt.nextInt();
 
         new DrawSwing();
 
@@ -25,11 +15,14 @@ public class DrawSwing {
 
     public DrawSwing()
     {
-        SwingUtilities.invokeLater(() -> createGUI());
+        String tekst = JOptionPane.showInputDialog("Podaj promień (w px) = ");
+        int r = Integer.parseInt(tekst);
+
+        SwingUtilities.invokeLater(() -> createGUI(r));
     }
 
 
-    protected void createGUI()
+    protected void createGUI(int r)
     {
         // utworzenie okna
         JFrame jf = new JFrame();
@@ -48,7 +41,7 @@ public class DrawSwing {
         jf.setResizable(false);
 
         // utworzenie obszaru rysowania - pulpitu
-        MyPanel p = new MyPanel();
+        MyPanel p = new MyPanel(r);
 
         // wymiana domyĹlnego pulpitu na wĹasny
         jf.setContentPane(p);
@@ -64,9 +57,12 @@ public class DrawSwing {
 class MyPanel
         extends JPanel {
 
+    int promien;
+
     // konstruktor
-    MyPanel()
+    MyPanel(int promien)
     {
+        this.promien = promien;
         // ustalenie rozmiarĂłw poczÄtkowych
         setPreferredSize(new Dimension(400,400));
     }
@@ -78,10 +74,11 @@ class MyPanel
         super.paintComponent(g);
 
         // pobranie aktualnych rozmiarĂłw
-        int width = getWidth();
-        int height = getHeight();
+//        int width = getWidth();
+//        int height = getHeight();
 
-        int w, h;
+//        int promien = wejsciePromien();
+        int proc = promien*(13)/100;
 
         // TU RYSUJEMY!
         // ........
@@ -89,16 +86,11 @@ class MyPanel
 //        g.setFont(new Font("Dialog", Font.BOLD|Font.ITALIC, 30));
 //        g.drawString("Tu rysujemy!", width/2, height/2);
 
-        int x=50, y=50;
 
-
-
-        w=300;h=300;
-
-        g.fillOval(x, y, w, h);
+        g.fillOval(200-promien, 200-promien, 2*promien, 2*promien);
 
         g.setColor(Color.white);
-        g.fillArc(x+20,y+20,w-40, h-40, 0,180);
+        g.fillArc(200-promien+proc,200-promien+proc,2*promien-2*proc, 2*promien-2*proc, 0,180);
 
 
         // ........
