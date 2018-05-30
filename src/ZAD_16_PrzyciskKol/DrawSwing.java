@@ -71,13 +71,18 @@ class MyPanel
         przycisk = new JButton("Klik!");
         this.add(przycisk);
 
-        przycisk.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                przycisk.setOpaque(true);
-                przycisk.setBackground(getColor());
+//        przycisk.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                przycisk.setOpaque(true);
+//                przycisk.setBackground(getColor());
+//
+//            }
+//        });
 
-            }
+        przycisk.addActionListener(ae->{
+            przycisk.setOpaque(true);
+            przycisk.setBackground(getColor());
         });
 
     }
