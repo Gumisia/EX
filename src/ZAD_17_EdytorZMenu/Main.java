@@ -5,8 +5,6 @@ import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -49,9 +47,9 @@ public class Main extends JFrame{
         JMenu menuEdit = menuBar.add(new JMenu("Edit"));
         JMenu menuOptions = menuBar.add(new JMenu("Options"));
 
-        JMenuItem menuFileOpen = menuFile.add(new JMenuItem("Open"));
+        JMenuItem menuFileOpen = menuFile.add(new JMenuItem("Open", 'o'));
         addSeparatorToJMenu(menuFile);
-        JMenuItem menuFileSave = menuFile.add(new JMenuItem("Save"));
+        JMenuItem menuFileSave = menuFile.add(new JMenuItem("Save", 's'));
 
 
         menuFileOpen.addActionListener(ae->{
@@ -73,10 +71,6 @@ public class Main extends JFrame{
         })
         ;
 
-
-//        addJMenuItem(menuFile, "Open");
-
-
         menuFileSave.setEnabled(false);
         addSeparatorToJMenu(menuFile);
 
@@ -94,9 +88,7 @@ public class Main extends JFrame{
 
         });
 
-//        addJMenuItem(menuFile, "Save");
-
-        JMenuItem menuFileSaveAs = menuFile.add(new JMenuItem("Save as..."));
+        JMenuItem menuFileSaveAs = menuFile.add(new JMenuItem("Save as...", 'a'));
         addSeparatorToJMenu(menuFile);
 
         menuFileSaveAs.addActionListener(ae->{
@@ -117,41 +109,34 @@ public class Main extends JFrame{
 
         })
         ;
-//        addJMenuItem(menuFile, "Save as ...");
         addSeparatorToJMenu(menuFile);
 
-        JMenuItem menuFileExit = menuFile.add(new JMenuItem("Exit"));
+        JMenuItem menuFileExit = menuFile.add(new JMenuItem("Exit", 'e'));
 
         menuFileExit.addActionListener(ae->{
                 this.dispose();
         });
-//        addLastJMenuItem(menuFile, "Exit");
-
 
         JMenu menuAdresy = new JMenu("Adresy");
         menuEdit.add(menuAdresy);
 
-        JMenuItem menuAdresyPraca = menuAdresy.add(new JMenuItem("Praca"));
+        JMenuItem menuAdresyPraca = menuAdresy.add(new JMenuItem("Firma", 'f'));
         addSeparatorToJMenu(menuAdresy);
 
         menuAdresyPraca.addActionListener(ae->{
-            jTextArea.insert("Praca", jTextArea.getCaretPosition());
+            jTextArea.insert("Firma", jTextArea.getCaretPosition());
         });
 
-        JMenuItem menuAdresySzkola = menuAdresy.add(new JMenuItem("Szkola"));
+        JMenuItem menuAdresySzkola = menuAdresy.add(new JMenuItem("Szkola", 's'));
         addSeparatorToJMenu(menuAdresy);
         menuAdresySzkola.addActionListener(ae->{
             jTextArea.insert("Szkola", jTextArea.getCaretPosition());
         });
 
-        JMenuItem menuAdresyDom = menuAdresy.add(new JMenuItem("Dom"));
+        JMenuItem menuAdresyDom = menuAdresy.add(new JMenuItem("Dom", 'd'));
         menuAdresyDom.addActionListener(ae->{
             jTextArea.insert("Dom", jTextArea.getCaretPosition());
         });
-
-//        addJMenuItem(menuAdresy, "Praca");
-//        addJMenuItem(menuAdresy, "Szkoła");
-//        addLastJMenuItem(menuAdresy, "Dom");
 
 
         menuForegroud = new JMenu("Foreground");
@@ -168,16 +153,6 @@ public class Main extends JFrame{
 
 
         this.setDefaultCloseOperation(3);
-    }
-
-    public void addJMenuItem(JMenu jMenu, String text){
-        jMenu.add(new JMenuItem(text));
-        addSeparatorToJMenu(jMenu);
-    }
-
-
-    public void addLastJMenuItem(JMenu jMenu, String text){
-        jMenu.add(new JMenuItem(text));
     }
 
     public void addSeparatorToJMenu(JMenu jMenu){
