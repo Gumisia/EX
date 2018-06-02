@@ -2,6 +2,9 @@ package ZAD_18_Rownanie;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
 
 //TODO dla wspolczynnikow z minusem
 //TODO tooltip
@@ -26,6 +29,17 @@ public class Main extends JFrame {
         jLabel.setBackground(Color.WHITE);
 
         container.setLayout(new GridLayout(1,3));
+
+        a.setToolTipText("Enter a");
+        b.setToolTipText("Enter b");
+        c.setToolTipText("Enter c");
+
+        clear.setToolTipText("Clear everything? Click!");
+        solve.setToolTipText("Check the solution of the quadratic equation");
+
+        solve.setMnemonic(KeyEvent.VK_S);
+        clear.setMnemonic(KeyEvent.VK_C);
+
         container.add(a);
         container.add(b);
         container.add(c);
@@ -45,29 +59,102 @@ public class Main extends JFrame {
 //            }
 //        });
 
-        a.addActionListener(ae->{
-//            System.out.print(numberTest(a.getText()));
-            if(numberTest(a.getText())){
-                setAx2(Integer.parseInt(a.getText()));
+        a.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                a.setText("ax2");
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                String text = a.getText();
+
+                if(checkNegative(text)){
+                    text = text.substring(1);
+                    if(numberTest(text)) {
+                        setAx2(Integer.parseInt(text) * (-1));
+                    }
+                }
+                else if(numberTest(text)){
+                    setAx2(Integer.parseInt(text));
 //                System.out.println(" ->"+ax2);
+                }
             }
         });
+//            a.addFocusListener(this);
+//            public void focusGained(FocusEvent e){
+//                a.setText("ax2");
+//            }
+//            public void focusLost(FocusEvent e){
+//                String text = a.getText();
+//
+//                if(checkNegative(text)){
+//                    text = text.substring(1);
+//                    if(numberTest(text)) {
+//                        setAx2(Integer.parseInt(text) * (-1));
+//                    }
+//                }
+//                else if(numberTest(text)){
+//                    setAx2(Integer.parseInt(text));
+////                System.out.println(" ->"+ax2);
+//                }
+//            }
+//        });
+
+//        a.addActionListener(ae->{
+////            System.out.print(numberTest(a.getText()));
+//            String text = a.getText();
+//
+//            if(checkNegative(text)){
+//                text = text.substring(1);
+//                if(numberTest(text)) {
+//                    setAx2(Integer.parseInt(text) * (-1));
+//                }
+//            }
+//            else if(numberTest(text)){
+//                setAx2(Integer.parseInt(text));
+////                System.out.println(" ->"+ax2);
+//            }
+//        });
 
         b.addActionListener(ae->{
-            if(numberTest(b.getText())) {
-                setBx(Integer.parseInt(b.getText()));
+            String text = b.getText();
+
+            if(checkNegative(text)){
+                text = text.substring(1);
+                if(numberTest(text)) {
+                    setBx(Integer.parseInt(text) * (-1));
+                }
+            }
+            else if(numberTest(text)) {
+                setBx(Integer.parseInt(text));
             }
         });
 
         c.addActionListener(ae->{
-            if(numberTest(c.getText())) {
-                setC0(Integer.parseInt(c.getText()));
+            String text = c.getText();
+
+            if(checkNegative(text)){
+                text = text.substring(1);
+                if(numberTest(text)) {
+                    setC0(Integer.parseInt(text) * (-1));
+                }
+            }
+            else if(numberTest(text)) {
+                setC0(Integer.parseInt(text));
             }
         });
 
         clear.addActionListener(ae->{
             jLabel.setText(null);
             setBackgroundOnMac(jLabel, Color.WHITE);
+            a.setText("");
+            b.setText("");
+            c.setText("");
+
+            setAx2(0);
+            setBx(0);
+            setC0(0);
 //            jLabel.setBackground(Color.WHITE);
 //            jLabel.setOpaque(true);
         });
@@ -131,6 +218,14 @@ public class Main extends JFrame {
         return test;
     }
 
+    public boolean checkNegative(String text){
+        boolean test=false;
+        if(text.charAt(0)=='-'){
+            test=true;
+        }
+        return test;
+    }
+
     public boolean quadraticEquation(){
 //        final int zero = 0;
         boolean test = true;
@@ -150,15 +245,16 @@ public class Main extends JFrame {
 
     public String countQuadraticEquation(){
         double delta = bx*bx - 4*ax2*c1;
+        double deltSqrt = Math.sqrt(delta);
         double x1, x2;
 
-        x1 = (((-1)*bx)-Math.sqrt(delta))/2.0*ax2;
-        x2 = (bx-Math.sqrt(delta))/2.0*ax2;
+        x1 = (((-1)*bx)+deltSqrt)/(2.0*ax2);
+        x2 = (((-1)*bx)-deltSqrt)/(2.0*ax2);
 
         System.out.println("Delta = " + delta + "  x1 = "+ x1 + ", x2 = " + x2);
 
         if(delta<0)
-            return "Delta < 0, brak rozwiazań";
+            return "Delta < 0, no solutions :(";
         else
         return "x1 = "+ x1 + ", x2 = " + x2;
     }
