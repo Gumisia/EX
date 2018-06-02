@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 //TODO dla wspolczynnikow z minusem
+//TODO tooltip
 
 public class Main extends JFrame {
 
@@ -85,7 +86,7 @@ public class Main extends JFrame {
     JPanel jPanel = new JPanel();
     JButton solve = new JButton("Solve");
     JButton clear = new JButton("Clear");
-    JLabel jLabel = new JLabel("Przykładowy tekst etykiety");
+    JLabel jLabel = new JLabel("Hello in QuadraticEquation :) !");
     Container container = new Container();
     JTextField a = new JTextField();
     JTextField b = new JTextField();
