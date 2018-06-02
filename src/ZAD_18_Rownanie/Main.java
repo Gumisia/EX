@@ -6,8 +6,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 
-//TODO dla wspolczynnikow z minusem
-//TODO tooltip
+//DONE dla wspolczynnikow z minusem
+//DONE tooltip
+//TODO FocusListener b, c jTextField
 
 public class Main extends JFrame {
 
