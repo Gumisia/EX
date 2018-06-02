@@ -8,7 +8,15 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+//TODO
+//skroty klawiszow
+//ma otwierac ostatnie mijsce zapisu pliku
+//ikonki kolorow
+//funkcja uniwersalna
+//lista kolorow
 
 public class Main extends JFrame{
 
@@ -212,6 +220,7 @@ public class Main extends JFrame{
     private JMenuBar menuBar = new JMenuBar();
     private JMenu menuForegroud, menuBackground,menuFontSize;
 
+
     public static void main(String[] args) {
         new Main().setVisible(true);
     }
@@ -304,4 +313,20 @@ public class Main extends JFrame{
 
         }
     }
+
+//    class pairOfColors{
+//
+//        String name;
+//        Color color;
+//
+//
+//
+//        pairOfColors(String name, Color color){
+//            this.name = name;
+//            this.color = color;
+//        }
+//    }
+
+
+
 }
