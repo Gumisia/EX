@@ -6,9 +6,10 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 
-//DONE dla wspolczynnikow z minusem
-//DONE tooltip
+//DONE negative value jTextField
+//DONE tooltip jTextField
 //DONE FocusListener b, c jTextField
+//DONE if jTextField is empty
 
 public class Main extends JFrame {
 
@@ -89,17 +90,26 @@ public class Main extends JFrame {
 //                a = new JFormattedTextField(decimalFormat);
 //                a.setColumns(5);
 
-                if(checkNegative(text)){
-                    text = text.substring(1);
-                    if(numberTest(text)) {
-                        setAx2(Integer.parseInt(text) * (-1));
+                try {
+
+                    if(checkNegative(text)){
+                        text = text.substring(1);
+                        if(numberTest(text)) {
+                            setAx2(Integer.parseInt(text) * (-1));
+                        }
                     }
-                }
-                else if(numberTest(text)){
-                    setAx2(Integer.parseInt(text));
+                    else if(numberTest(text)){
+                        setAx2(Integer.parseInt(text));
 //                System.out.println(" ->"+ax2);
+                    }
+                } catch (StringIndexOutOfBoundsException ex){
+                    System.out.println("Empty String A");
+                    setAx2(0); setBx(0); setC0(0);
                 }
+
+
             }
+
         });
 //            a.addFocusListener(this);
 //            public void focusGained(FocusEvent e){
@@ -149,14 +159,20 @@ public class Main extends JFrame {
             public void focusLost(FocusEvent e) {
                 String text = b.getText();
 
-                if(checkNegative(text)){
-                    text = text.substring(1);
-                    if(numberTest(text)) {
-                        setBx(Integer.parseInt(text) * (-1));
+                try{
+
+                    if(checkNegative(text)){
+                        text = text.substring(1);
+                        if(numberTest(text)) {
+                            setBx(Integer.parseInt(text) * (-1));
+                        }
                     }
-                }
-                else if(numberTest(text)) {
-                    setBx(Integer.parseInt(text));
+                    else if(numberTest(text)) {
+                        setBx(Integer.parseInt(text));
+                    }
+                } catch (StringIndexOutOfBoundsException ex){
+                    System.out.println("Empty String B");
+                    setAx2(0); setBx(0); setC0(0);
                 }
             }
         });
@@ -187,14 +203,20 @@ public class Main extends JFrame {
             public void focusLost(FocusEvent e) {
                 String text = c.getText();
 
-                if(checkNegative(text)){
-                    text = text.substring(1);
-                    if(numberTest(text)) {
-                        setC0(Integer.parseInt(text) * (-1));
+                try{
+
+                    if(checkNegative(text)){
+                        text = text.substring(1);
+                        if(numberTest(text)) {
+                            setC0(Integer.parseInt(text) * (-1));
+                        }
                     }
-                }
-                else if(numberTest(text)) {
-                    setC0(Integer.parseInt(text));
+                    else if(numberTest(text)) {
+                        setC0(Integer.parseInt(text));
+                    }
+                }catch (StringIndexOutOfBoundsException ex){
+                    System.out.println("Empty String C");
+                    setAx2(0); setBx(0); setC0(0);
                 }
             }
         });
@@ -229,13 +251,13 @@ public class Main extends JFrame {
 
         solve.addActionListener(ae->{
             setBackgroundOnMac(jLabel, Color.WHITE);
-            jLabel.setText(" ");
+//            jLabel.setText(" ");
 
             if(quadraticEquation()) {
 
                 jLabel.setText(countQuadraticEquation());
 //                x1 = 0; x2 = 0;
-                setAx2(0); setBx(0); setC0(0);
+//                setAx2(0); setBx(0); setC0(0);
 
             }
         });
@@ -254,7 +276,7 @@ public class Main extends JFrame {
     private JTextField b = new JTextField();
     private JTextField c = new JTextField();
 
-    double x1, x2;
+    double x1, x2, delta;
 
     public static void main(String[] args) {
         new Main().setVisible(true);
@@ -284,6 +306,7 @@ public class Main extends JFrame {
         }
         if(!test){
             jLabel.setText("Number format error!");
+            delta=0; x1=0; x2=0;
             setBackgroundOnMac(jLabel, Color.RED);
         }
         if(test && (ax2!=0) && (bx!=0) && (c1!=0)){
@@ -321,7 +344,7 @@ public class Main extends JFrame {
     }
 
     private String countQuadraticEquation(){
-        double delta = bx*bx - 4*ax2*c1;
+        delta = bx*bx - 4*ax2*c1;
         double deltSqrt = Math.sqrt(delta);
 
         x1 = (((-1)*bx)+deltSqrt)/(2.0*ax2);
@@ -333,10 +356,12 @@ public class Main extends JFrame {
             delta = 0;
             return "Delta < 0, no solutions :(";
         }
-        else {
+        else if(delta>0){
             delta=0;
             return "x1 = "+ x1 + ", x2 = " + x2;
         }
+        delta=0;
+        return "";
 
     }
 
