@@ -6,10 +6,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 
-//DONE negative value jTextField
-//DONE tooltip jTextField
-//DONE FocusListener b, c jTextField
-//DONE if jTextField is empty
 
 public class Main extends JFrame {
 
@@ -51,17 +47,6 @@ public class Main extends JFrame {
         jPanel.add(solve);
         jPanel.add(clear);
 
-//        a.addKeyListener(new KeyAdapter() {
-//            @Override
-//            public void keyPressed(KeyEvent e) {
-//                int key = e.getKeyCode();
-////                System.out.println(key);
-////                if(key<'0' && key>'9') e.setKeyChar(' ');
-//                setAx2((int)key);
-//            }
-//        });
-
-
         a.setText("3");
         setAx2(3);
         a.addFocusListener(new FocusListener() {
@@ -73,22 +58,7 @@ public class Main extends JFrame {
             @Override
             public void focusLost(FocusEvent e) {
                 String text = a.getText();
-//                int negative = 1;
 
-
-//                if(numberTest(text)){
-//                    if(checkNegative(text)){
-//                        text = text.substring(1);
-//                        negative = (-1);
-//                    }
-//                    setAx2(Integer.parseInt(text)*negative);
-//                }
-
-//                NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
-//                DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
-//                decimalFormat.setGroupingUsed(false);
-//                a = new JFormattedTextField(decimalFormat);
-//                a.setColumns(5);
 
                 try {
 
@@ -100,7 +70,6 @@ public class Main extends JFrame {
                     }
                     else if(numberTest(text)){
                         setAx2(Integer.parseInt(text));
-//                System.out.println(" ->"+ax2);
                     }
                 } catch (StringIndexOutOfBoundsException ex){
                     System.out.println("Empty String A");
@@ -111,48 +80,14 @@ public class Main extends JFrame {
             }
 
         });
-//            a.addFocusListener(this);
-//            public void focusGained(FocusEvent e){
-//                a.setText("ax2");
-//            }
-//            public void focusLost(FocusEvent e){
-//                String text = a.getText();
-//
-//                if(checkNegative(text)){
-//                    text = text.substring(1);
-//                    if(numberTest(text)) {
-//                        setAx2(Integer.parseInt(text) * (-1));
-//                    }
-//                }
-//                else if(numberTest(text)){
-//                    setAx2(Integer.parseInt(text));
-////                System.out.println(" ->"+ax2);
-//                }
-//            }
-//        });
 
-//        a.addActionListener(ae->{
-////            System.out.print(numberTest(a.getText()));
-//            String text = a.getText();
-//
-//            if(checkNegative(text)){
-//                text = text.substring(1);
-//                if(numberTest(text)) {
-//                    setAx2(Integer.parseInt(text) * (-1));
-//                }
-//            }
-//            else if(numberTest(text)){
-//                setAx2(Integer.parseInt(text));
-////                System.out.println(" ->"+ax2);
-//            }
-//        });
 
         b.setText("2");
         setBx(2);
         b.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-//                b.setText("-2");
+
             }
 
             @Override
@@ -177,26 +112,13 @@ public class Main extends JFrame {
             }
         });
 
-//        b.addActionListener(ae->{
-//            String text = b.getText();
-//
-//            if(checkNegative(text)){
-//                text = text.substring(1);
-//                if(numberTest(text)) {
-//                    setBx(Integer.parseInt(text) * (-1));
-//                }
-//            }
-//            else if(numberTest(text)) {
-//                setBx(Integer.parseInt(text));
-//            }
-//        });
 
         c.setText("-8");
         setC0(-8);
         c.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-//                c.setText("8");
+
             }
 
             @Override
@@ -221,19 +143,6 @@ public class Main extends JFrame {
             }
         });
 
-//        c.addActionListener(ae->{
-//            String text = c.getText();
-//
-//            if(checkNegative(text)){
-//                text = text.substring(1);
-//                if(numberTest(text)) {
-//                    setC0(Integer.parseInt(text) * (-1));
-//                }
-//            }
-//            else if(numberTest(text)) {
-//                setC0(Integer.parseInt(text));
-//            }
-//        });
 
         clear.addActionListener(ae->{
             jLabel.setText(null);
@@ -245,19 +154,15 @@ public class Main extends JFrame {
             setAx2(0);
             setBx(0);
             setC0(0);
-//            jLabel.setBackground(Color.WHITE);
-//            jLabel.setOpaque(true);
+
         });
 
         solve.addActionListener(ae->{
             setBackgroundOnMac(jLabel, Color.WHITE);
-//            jLabel.setText(" ");
+
 
             if(quadraticEquation()) {
-
                 jLabel.setText(countQuadraticEquation());
-//                x1 = 0; x2 = 0;
-//                setAx2(0); setBx(0); setC0(0);
 
             }
         });
@@ -282,7 +187,6 @@ public class Main extends JFrame {
         new Main().setVisible(true);
     }
 
-//    class rownanieKwadratowe{
     private int ax2, bx, c1;
 
 
@@ -312,8 +216,7 @@ public class Main extends JFrame {
         if(test && (ax2!=0) && (bx!=0) && (c1!=0)){
             jLabel.setText(null);
             setBackgroundOnMac(jLabel, Color.WHITE);
-//            jLabel.setBackground(Color.WHITE);
-//            jLabel.setOpaque(true);
+
         }
         return test;
     }
@@ -327,7 +230,6 @@ public class Main extends JFrame {
     }
 
     private boolean quadraticEquation(){
-//        final int zero = 0;
         boolean test = true;
         if(ax2==0||bx==0||c1==0){
             test = false;
@@ -350,8 +252,6 @@ public class Main extends JFrame {
         x1 = (((-1)*bx)+deltSqrt)/(2.0*ax2);
         x2 = (((-1)*bx)-deltSqrt)/(2.0*ax2);
 
-//        System.out.println("Delta = " + delta + "  x1 = "+ x1 + ", x2 = " + x2);
-
         if(delta<0) {
             delta = 0;
             return "Delta < 0, no solutions :(";
@@ -365,7 +265,4 @@ public class Main extends JFrame {
 
     }
 
-
-
-    //    }
 }
