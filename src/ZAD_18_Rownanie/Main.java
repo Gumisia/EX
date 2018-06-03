@@ -8,15 +8,15 @@ import java.awt.event.KeyEvent;
 
 //DONE dla wspolczynnikow z minusem
 //DONE tooltip
-//TODO FocusListener b, c jTextField
+//DONE FocusListener b, c jTextField
 
 public class Main extends JFrame {
 
-    public Main(){
+    private Main(){
         initcomponents();
     }
 
-    public void initcomponents(){
+    private void initcomponents(){
 
         this.setTitle("Quadratic Equation");
         this.setBounds(700, 300, 500, 250);
@@ -60,15 +60,34 @@ public class Main extends JFrame {
 //            }
 //        });
 
+
+        a.setText("3");
+        setAx2(3);
         a.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                a.setText("ax2");
+//                a.setText("3");
             }
 
             @Override
             public void focusLost(FocusEvent e) {
                 String text = a.getText();
+//                int negative = 1;
+
+
+//                if(numberTest(text)){
+//                    if(checkNegative(text)){
+//                        text = text.substring(1);
+//                        negative = (-1);
+//                    }
+//                    setAx2(Integer.parseInt(text)*negative);
+//                }
+
+//                NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+//                DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
+//                decimalFormat.setGroupingUsed(false);
+//                a = new JFormattedTextField(decimalFormat);
+//                a.setColumns(5);
 
                 if(checkNegative(text)){
                     text = text.substring(1);
@@ -118,33 +137,81 @@ public class Main extends JFrame {
 //            }
 //        });
 
-        b.addActionListener(ae->{
-            String text = b.getText();
-
-            if(checkNegative(text)){
-                text = text.substring(1);
-                if(numberTest(text)) {
-                    setBx(Integer.parseInt(text) * (-1));
-                }
+        b.setText("2");
+        setBx(2);
+        b.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+//                b.setText("-2");
             }
-            else if(numberTest(text)) {
-                setBx(Integer.parseInt(text));
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                String text = b.getText();
+
+                if(checkNegative(text)){
+                    text = text.substring(1);
+                    if(numberTest(text)) {
+                        setBx(Integer.parseInt(text) * (-1));
+                    }
+                }
+                else if(numberTest(text)) {
+                    setBx(Integer.parseInt(text));
+                }
             }
         });
 
-        c.addActionListener(ae->{
-            String text = c.getText();
+//        b.addActionListener(ae->{
+//            String text = b.getText();
+//
+//            if(checkNegative(text)){
+//                text = text.substring(1);
+//                if(numberTest(text)) {
+//                    setBx(Integer.parseInt(text) * (-1));
+//                }
+//            }
+//            else if(numberTest(text)) {
+//                setBx(Integer.parseInt(text));
+//            }
+//        });
 
-            if(checkNegative(text)){
-                text = text.substring(1);
-                if(numberTest(text)) {
-                    setC0(Integer.parseInt(text) * (-1));
+        c.setText("-8");
+        setC0(-8);
+        c.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+//                c.setText("8");
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                String text = c.getText();
+
+                if(checkNegative(text)){
+                    text = text.substring(1);
+                    if(numberTest(text)) {
+                        setC0(Integer.parseInt(text) * (-1));
+                    }
+                }
+                else if(numberTest(text)) {
+                    setC0(Integer.parseInt(text));
                 }
             }
-            else if(numberTest(text)) {
-                setC0(Integer.parseInt(text));
-            }
         });
+
+//        c.addActionListener(ae->{
+//            String text = c.getText();
+//
+//            if(checkNegative(text)){
+//                text = text.substring(1);
+//                if(numberTest(text)) {
+//                    setC0(Integer.parseInt(text) * (-1));
+//                }
+//            }
+//            else if(numberTest(text)) {
+//                setC0(Integer.parseInt(text));
+//            }
+//        });
 
         clear.addActionListener(ae->{
             jLabel.setText(null);
@@ -161,8 +228,15 @@ public class Main extends JFrame {
         });
 
         solve.addActionListener(ae->{
+            setBackgroundOnMac(jLabel, Color.WHITE);
+            jLabel.setText(" ");
+
             if(quadraticEquation()) {
+
                 jLabel.setText(countQuadraticEquation());
+//                x1 = 0; x2 = 0;
+                setAx2(0); setBx(0); setC0(0);
+
             }
         });
 
@@ -171,39 +245,41 @@ public class Main extends JFrame {
 
     }
 
-    JPanel jPanel = new JPanel();
-    JButton solve = new JButton("Solve");
-    JButton clear = new JButton("Clear");
-    JLabel jLabel = new JLabel("Hello in QuadraticEquation :) !");
-    Container container = new Container();
-    JTextField a = new JTextField();
-    JTextField b = new JTextField();
-    JTextField c = new JTextField();
+    private JPanel jPanel = new JPanel();
+    private JButton solve = new JButton("Solve");
+    private JButton clear = new JButton("Clear");
+    private JLabel jLabel = new JLabel("Hello in QuadraticEquation :) !");
+    private Container container = new Container();
+    private JTextField a = new JTextField();
+    private JTextField b = new JTextField();
+    private JTextField c = new JTextField();
+
+    double x1, x2;
 
     public static void main(String[] args) {
         new Main().setVisible(true);
     }
 
 //    class rownanieKwadratowe{
-        int ax2, bx, c1;
+    private int ax2, bx, c1;
 
 
-    public void setAx2(int ax2) {
+    private void setAx2(int ax2) {
         this.ax2 = ax2;
     }
 
-    public void setBx(int bx) {
+    private void setBx(int bx) {
         this.bx = bx;
     }
 
-    public void setC0(int c1) {
+    private void setC0(int c1) {
         this.c1 = c1;
     }
 
-    public boolean numberTest(String text){
+    private boolean numberTest(String text){
         char tab[] = text.toCharArray();
         boolean test = true;
-        for(int i=0; (i<tab.length)&&(test==true); i++){
+        for(int i=0; (i<tab.length)&&(test); i++){
             if(tab[i]<'0'||tab[i]>'9') test = false;
         }
         if(!test){
@@ -219,7 +295,7 @@ public class Main extends JFrame {
         return test;
     }
 
-    public boolean checkNegative(String text){
+    private boolean checkNegative(String text){
         boolean test=false;
         if(text.charAt(0)=='-'){
             test=true;
@@ -227,7 +303,7 @@ public class Main extends JFrame {
         return test;
     }
 
-    public boolean quadraticEquation(){
+    private boolean quadraticEquation(){
 //        final int zero = 0;
         boolean test = true;
         if(ax2==0||bx==0||c1==0){
@@ -239,26 +315,32 @@ public class Main extends JFrame {
         return test;
     }
 
-    public void setBackgroundOnMac(JComponent component, Color color){
+    private void setBackgroundOnMac(JComponent component, Color color){
         component.setBackground(color);
         component.setOpaque(true);
     }
 
-    public String countQuadraticEquation(){
+    private String countQuadraticEquation(){
         double delta = bx*bx - 4*ax2*c1;
         double deltSqrt = Math.sqrt(delta);
-        double x1, x2;
 
         x1 = (((-1)*bx)+deltSqrt)/(2.0*ax2);
         x2 = (((-1)*bx)-deltSqrt)/(2.0*ax2);
 
-        System.out.println("Delta = " + delta + "  x1 = "+ x1 + ", x2 = " + x2);
+//        System.out.println("Delta = " + delta + "  x1 = "+ x1 + ", x2 = " + x2);
 
-        if(delta<0)
+        if(delta<0) {
+            delta = 0;
             return "Delta < 0, no solutions :(";
-        else
-        return "x1 = "+ x1 + ", x2 = " + x2;
+        }
+        else {
+            delta=0;
+            return "x1 = "+ x1 + ", x2 = " + x2;
+        }
+
     }
+
+
 
     //    }
 }
