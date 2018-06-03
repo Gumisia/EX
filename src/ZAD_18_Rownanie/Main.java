@@ -52,7 +52,6 @@ public class Main extends JFrame {
         a.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-//                a.setText("3");
             }
 
             @Override
@@ -163,6 +162,7 @@ public class Main extends JFrame {
 
             if(quadraticEquation()) {
                 jLabel.setText(countQuadraticEquation());
+                setBackgroundOnMac(jLabel, Color.BLUE);
 
             }
         });
@@ -231,7 +231,7 @@ public class Main extends JFrame {
 
     private boolean quadraticEquation(){
         boolean test = true;
-        if(ax2==0||bx==0||c1==0){
+        if(ax2==0){
             test = false;
             jLabel.setText("Not a quadratic equation!");
             setBackgroundOnMac(jLabel, Color.RED);
@@ -246,22 +246,32 @@ public class Main extends JFrame {
     }
 
     private String countQuadraticEquation(){
-        delta = bx*bx - 4*ax2*c1;
-        double deltSqrt = Math.sqrt(delta);
 
-        x1 = (((-1)*bx)+deltSqrt)/(2.0*ax2);
-        x2 = (((-1)*bx)-deltSqrt)/(2.0*ax2);
 
-        if(delta<0) {
-            delta = 0;
-            return "Delta < 0, no solutions :(";
+            delta = bx*bx + (-4)*ax2*c1;
+
+
+            if(delta<0) {
+                delta = 0;
+                setBackgroundOnMac(jLabel, Color.RED);
+                return "Delta < 0, no solutions :(";
+            }
+            else if(delta>0){
+                double deltSqrt = Math.sqrt(delta);
+
+                x1 = (((-1)*bx)+deltSqrt)/(2.0*ax2);
+                x2 = (((-1)*bx)-deltSqrt)/(2.0*ax2);
+                delta=0;
+                return "x1 = "+ x1 + ", x2 = " + x2;
+            } else {
+                x1 = ((-1) * bx) / (2.0 * ax2);
+                return "x= " + x1;
         }
-        else if(delta>0){
-            delta=0;
-            return "x1 = "+ x1 + ", x2 = " + x2;
-        }
-        delta=0;
-        return "";
+
+
+
+
+//        return "";
 
     }
 
