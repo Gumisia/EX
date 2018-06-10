@@ -8,15 +8,14 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 //TODO
 //skroty klawiszow
 //ma otwierac ostatnie mijsce zapisu pliku
 //ikonki kolorow
-//funkcja uniwersalna
-//lista kolorow
+//DONE lista kolorow
 
 public class Main extends JFrame{
 
@@ -46,7 +45,6 @@ public class Main extends JFrame{
         JScrollPane jScrollPane = new JScrollPane(jTextArea);
 
 
-
         this.setJMenuBar(menuBar);
         this.add(jPanel);
         jPanel.add(jScrollPane);
@@ -58,6 +56,8 @@ public class Main extends JFrame{
         JMenuItem menuFileOpen = menuFile.add(new JMenuItem("Open", 'o'));
         addSeparatorToJMenu(menuFile);
         JMenuItem menuFileSave = menuFile.add(new JMenuItem("Save", 's'));
+
+
 
 
         menuFileOpen.addActionListener(ae->{
@@ -125,38 +125,37 @@ public class Main extends JFrame{
                 this.dispose();
         });
 
-        JMenu menuAdresy = new JMenu("Adresy");
+        menuAdresy = new JMenu("Adresy");
         menuEdit.add(menuAdresy);
 
         JMenuItem menuAdresyPraca = menuAdresy.add(new JMenuItem("Firma", 'f'));
         addSeparatorToJMenu(menuAdresy);
+        JMenuItem menuAdresySzkola = menuAdresy.add(new JMenuItem("Szkola", 's'));
+        addSeparatorToJMenu(menuAdresy);
+        JMenuItem menuAdresyDom = menuAdresy.add(new JMenuItem("Dom", 'd'));
 
         menuAdresyPraca.addActionListener(ae->{
             jTextArea.insert("Firma", jTextArea.getCaretPosition());
         });
-
-        JMenuItem menuAdresySzkola = menuAdresy.add(new JMenuItem("Szkola", 's'));
-        addSeparatorToJMenu(menuAdresy);
         menuAdresySzkola.addActionListener(ae->{
             jTextArea.insert("Szkola", jTextArea.getCaretPosition());
         });
 
-        JMenuItem menuAdresyDom = menuAdresy.add(new JMenuItem("Dom", 'd'));
         menuAdresyDom.addActionListener(ae->{
             jTextArea.insert("Dom", jTextArea.getCaretPosition());
         });
 
 
         menuForegroud = new JMenu("Foreground");
-        menuOptions.add(menuForegroud);
-        addColorJMenuItemForegroud(menuForegroud);
-
         menuBackground = new JMenu("Background");
-        menuOptions.add(menuBackground);
-        addColorJMenuItemBackgroud(menuBackground);
-
         menuFontSize = new JMenu("Font size");
+
+        menuOptions.add(menuForegroud);
+        menuOptions.add(menuBackground);
         menuOptions.add(menuFontSize);
+
+        addColorJMenuItemForegroud(menuForegroud);
+        addColorJMenuItemBackgroud(menuBackground);
         addFontSizeJMenuItem(menuFontSize);
 
 
@@ -164,37 +163,43 @@ public class Main extends JFrame{
     }
 
     public void addSeparatorToJMenu(JMenu jMenu){
+
         jMenu.addSeparator();
     }
 
     public void addColorJMenuItemForegroud(JMenu jMenu){
 
-        String[] colors = {"Blue", "Yellow", "Orange", "Red", "White", "Black", "Green"};
+        ColorMap colorMap = new ColorMap();
+        List<String> list = colorMap.getList();
 
         JMenuItem item;
-        for(int i=0; i<colors.length-2; i++){
-            item = new JMenuItem(colors[i]);
+
+        for(int i=0; i<list.size()-1; i++){
+            item = new JMenuItem(list.get(i));
             item.addActionListener(new ActionsForeground());
             jMenu.add(item);
             addSeparatorToJMenu(jMenu);
         }
-        item = new JMenuItem(colors[colors.length-1]);
+        item = new JMenuItem(list.get(list.size()-1));
         item.addActionListener(new ActionsForeground());
         jMenu.add(item);
+
     }
 
     public void addColorJMenuItemBackgroud(JMenu jMenu){
 
-        String[] colors = {"Blue", "Yellow", "Orange", "Red", "White", "Black", "Green"};
+        ColorMap colorMap = new ColorMap();
+        List<String> list = colorMap.getList();
+
         JMenuItem item;
 
-        for(int i=0; i<colors.length-2; i++){
-            item = new JMenuItem(colors[i]);
+        for(int i=0; i<list.size()-1; i++){
+            item = new JMenuItem(list.get(i));
             item.addActionListener(new ActionsBackground());
             jMenu.add(item);
             addSeparatorToJMenu(jMenu);
         }
-        item = new JMenuItem(colors[colors.length-1]);
+        item = new JMenuItem(list.get(list.size()-1));
         item.addActionListener(new ActionsBackground());
         jMenu.add(item);
     }
@@ -219,9 +224,11 @@ public class Main extends JFrame{
     private JTextArea jTextArea =  new JTextArea();
     private JMenuBar menuBar = new JMenuBar();
     private JMenu menuForegroud, menuBackground,menuFontSize;
+    private JMenu menuAdresy;
 
 
     public static void main(String[] args) {
+
         new Main().setVisible(true);
     }
 
@@ -229,37 +236,12 @@ public class Main extends JFrame{
         @Override
         public void actionPerformed(ActionEvent e) {
             JMenuItem item = (JMenuItem) e.getSource();
+            ColorMap colorMap = new ColorMap();
+
             String text = item.getText();
-            switch (text){
-                case "Yellow":{
-                    jTextArea.setForeground(Color.YELLOW);
-                    break;
-                }
-                case "Blue":{
-                    jTextArea.setForeground(Color.BLUE);
-                    break;
-                }
-                case "Orange":{
-                    jTextArea.setForeground(Color.ORANGE);
-                    break;
-                }
-                case "Red":{
-                    jTextArea.setForeground(Color.RED);
-                    break;
-                }
-                case "White":{
-                    jTextArea.setForeground(Color.WHITE);
-                    break;
-                }
-                case "Black":{
-                    jTextArea.setForeground(Color.BLACK);
-                    break;
-                }
-                case "Green":{
-                    jTextArea.setForeground(Color.GREEN);
-                    break;
-                }
-            }
+
+            jTextArea.setForeground(colorMap.getValueColor(text));
+
         }
     }
 
@@ -267,37 +249,10 @@ public class Main extends JFrame{
         @Override
         public void actionPerformed(ActionEvent e) {
             JMenuItem item = (JMenuItem) e.getSource();
+            ColorMap colorMap = new ColorMap();
+
             String text = item.getText();
-            switch (text){
-                case "Yellow":{
-                    jTextArea.setBackground(Color.YELLOW);
-                    break;
-                }
-                case "Blue":{
-                    jTextArea.setBackground(Color.BLUE);
-                    break;
-                }
-                case "Orange":{
-                    jTextArea.setBackground(Color.ORANGE);
-                    break;
-                }
-                case "Red":{
-                    jTextArea.setBackground(Color.RED);
-                    break;
-                }
-                case "White":{
-                    jTextArea.setBackground(Color.WHITE);
-                    break;
-                }
-                case "Black":{
-                    jTextArea.setBackground(Color.BLACK);
-                    break;
-                }
-                case "Green":{
-                    jTextArea.setBackground(Color.GREEN);
-                    break;
-                }
-            }
+            jTextArea.setBackground(colorMap.getValueColor(text));
 
         }
     }
@@ -313,20 +268,5 @@ public class Main extends JFrame{
 
         }
     }
-
-//    class pairOfColors{
-//
-//        String name;
-//        Color color;
-//
-//
-//
-//        pairOfColors(String name, Color color){
-//            this.name = name;
-//            this.color = color;
-//        }
-//    }
-
-
 
 }
