@@ -14,7 +14,7 @@ import java.util.Scanner;
 //TODO
 //skroty klawiszow
 //ma otwierac ostatnie mijsce zapisu pliku
-//ikonki kolorow
+//DONE ikonki kolorow
 //DONE lista kolorow
 
 public class Main extends JFrame{
@@ -175,12 +175,12 @@ public class Main extends JFrame{
         JMenuItem item;
 
         for(int i=0; i<list.size()-1; i++){
-            item = new JMenuItem(list.get(i));
+            item = new JMenuItem(list.get(i), new ColorIcons(colorMap.getValueColor(list.get(i))));
             item.addActionListener(new ActionsForeground());
             jMenu.add(item);
             addSeparatorToJMenu(jMenu);
         }
-        item = new JMenuItem(list.get(list.size()-1));
+        item = new JMenuItem(list.get(list.size()-1), new ColorIcons(colorMap.getValueColor(list.get(list.size()-1))));
         item.addActionListener(new ActionsForeground());
         jMenu.add(item);
 
@@ -194,12 +194,12 @@ public class Main extends JFrame{
         JMenuItem item;
 
         for(int i=0; i<list.size()-1; i++){
-            item = new JMenuItem(list.get(i));
+            item = new JMenuItem(list.get(i), new ColorIcons(colorMap.getValueColor(list.get(i))));
             item.addActionListener(new ActionsBackground());
             jMenu.add(item);
             addSeparatorToJMenu(jMenu);
         }
-        item = new JMenuItem(list.get(list.size()-1));
+        item = new JMenuItem(list.get(list.size()-1), new ColorIcons(colorMap.getValueColor(list.get(list.size()-1))));
         item.addActionListener(new ActionsBackground());
         jMenu.add(item);
     }
