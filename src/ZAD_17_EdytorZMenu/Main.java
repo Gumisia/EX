@@ -5,17 +5,12 @@ import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Scanner;
-
-//TODO
-//skroty klawiszow
-//ma otwierac ostatnie mijsce zapisu pliku
-//DONE ikonki kolorow
-//DONE lista kolorow
 
 public class Main extends JFrame{
 
@@ -26,12 +21,9 @@ public class Main extends JFrame{
     public void initcomponents(){
 
         this.setTitle("Prosty edytor - bez tytułu");
-        this.setBounds(-700, 300, 500, 450);
-//        this.setBounds(300, 300, 300, 200);
+        this.setBounds(300, 300, 500, 450);
 
         jPanel.setLayout(new BorderLayout());
-
-        jTextArea.setSize(200, 100);// nie działa
 
         jPanel.setBorder(new EtchedBorder(Color.gray, Color.gray));
         jTextArea.setBackground(Color.white);
@@ -39,8 +31,7 @@ public class Main extends JFrame{
         jTextArea.setFont(new Font("Dialog", Font.BOLD, 30));
         jTextArea.setForeground(Color.BLUE);
 
-//        jTextArea.setWrapStyleWord(true);
-//        jTextArea.setLineWrap(true);
+
 
         JScrollPane jScrollPane = new JScrollPane(jTextArea);
 
@@ -57,15 +48,23 @@ public class Main extends JFrame{
         addSeparatorToJMenu(menuFile);
         JMenuItem menuFileSave = menuFile.add(new JMenuItem("Save", 's'));
 
-
+        menuFileOpen.setAccelerator(KeyStroke.getKeyStroke('N', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
+        menuFileSave.setAccelerator(KeyStroke.getKeyStroke('S', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
 
 
         menuFileOpen.addActionListener(ae->{
-            JFileChooser jFileChooser = new JFileChooser();
+            JFileChooser jFileChooser;
+
+            if(file!=null){
+                jFileChooser = new JFileChooser(file.getAbsolutePath());
+            }else {
+                jFileChooser = new JFileChooser();
+            }
             if(jFileChooser.showOpenDialog(null)==JFileChooser.APPROVE_OPTION){
-                File file = jFileChooser.getSelectedFile();
+                file = jFileChooser.getSelectedFile();
                 this.setTitle(file.getAbsolutePath());
 
+                jTextArea.setText("");
                 try{
                     Scanner scanner = new Scanner(file);
                     menuFileSave.setEnabled(true);
@@ -97,12 +96,19 @@ public class Main extends JFrame{
         });
 
         JMenuItem menuFileSaveAs = menuFile.add(new JMenuItem("Save as...", 'a'));
+        menuFileSaveAs.setAccelerator(KeyStroke.getKeyStroke('A', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
         addSeparatorToJMenu(menuFile);
 
         menuFileSaveAs.addActionListener(ae->{
-            JFileChooser jFileChooser = new JFileChooser();
+            JFileChooser jFileChooser;
+
+            if(file!=null){
+                jFileChooser = new JFileChooser(file.getAbsolutePath());
+            }else {
+                jFileChooser = new JFileChooser();
+            }
             if(jFileChooser.showSaveDialog(null)==JFileChooser.APPROVE_OPTION){
-                File file = jFileChooser.getSelectedFile();
+                file = jFileChooser.getSelectedFile();
 
                 try{
                     PrintWriter printWriter = new PrintWriter(file);
@@ -120,6 +126,7 @@ public class Main extends JFrame{
         addSeparatorToJMenu(menuFile);
 
         JMenuItem menuFileExit = menuFile.add(new JMenuItem("Exit", 'e'));
+        menuFileExit.setAccelerator(KeyStroke.getKeyStroke('X', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
 
         menuFileExit.addActionListener(ae->{
                 this.dispose();
@@ -128,13 +135,16 @@ public class Main extends JFrame{
         menuAdresy = new JMenu("Adresy");
         menuEdit.add(menuAdresy);
 
-        JMenuItem menuAdresyPraca = menuAdresy.add(new JMenuItem("Firma", 'f'));
+        JMenuItem menuAdresyFirma = menuAdresy.add(new JMenuItem("Firma", 'f'));
+        menuAdresyFirma.setAccelerator(KeyStroke.getKeyStroke('F', InputEvent.CTRL_MASK+InputEvent.SHIFT_MASK));
         addSeparatorToJMenu(menuAdresy);
         JMenuItem menuAdresySzkola = menuAdresy.add(new JMenuItem("Szkola", 's'));
+        menuAdresySzkola.setAccelerator(KeyStroke.getKeyStroke('S', InputEvent.CTRL_MASK+InputEvent.SHIFT_MASK));
         addSeparatorToJMenu(menuAdresy);
         JMenuItem menuAdresyDom = menuAdresy.add(new JMenuItem("Dom", 'd'));
+        menuAdresyDom.setAccelerator(KeyStroke.getKeyStroke('D', InputEvent.CTRL_MASK+InputEvent.SHIFT_MASK));
 
-        menuAdresyPraca.addActionListener(ae->{
+        menuAdresyFirma.addActionListener(ae->{
             jTextArea.insert("Firma", jTextArea.getCaretPosition());
         });
         menuAdresySzkola.addActionListener(ae->{
@@ -225,6 +235,7 @@ public class Main extends JFrame{
     private JMenuBar menuBar = new JMenuBar();
     private JMenu menuForegroud, menuBackground,menuFontSize;
     private JMenu menuAdresy;
+    private File file;
 
 
     public static void main(String[] args) {
