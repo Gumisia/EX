@@ -3,20 +3,23 @@ package ZAD_19_WykresFunkcji;
 import javax.swing.*;
 import java.awt.*;
 
-public class Main {
+public class Main extends JFrame{
 
     public static void main(String[] args) {
         new Main();
     }
 
     public Main(){
+
         SwingUtilities.invokeLater(() -> createGUI());
     }
 
-    JFrame jFrame = new JFrame();
+//    JFrame jFrame = new JFrame();
     MyPanel myPanel = new MyPanel();
-    JTextField wykres = new JTextField();
+//    JTextField wykres = new JTextField();
     Container container = new Container();
+    JPanel jPanelEnd = new JPanel();
+    Container containerAll = getContentPane();
 
     JTextField xmin = new JTextField();
     JTextField xmax = new JTextField();
@@ -27,28 +30,26 @@ public class Main {
 
     public void createGUI(){
 
-        jFrame.setTitle("Wykres");
-        jFrame.setBounds(900, 200, 450, 550);
-        jFrame.setVisible(true);
+        this.setTitle("Wykres");
+        this.setBounds(-700, 200, 450, 550);
+        this.setVisible(true);
 
-//        myPanel.setLayout(new FlowLayout(FlowLayout.TRAILING));
-//        setSize(100, 400); // nie działa bez pozycjonowania absolutnego czyli .setLayout(null);
-        myPanel.setLayout(null);
-        wykres.setSize(500, 400);
-        myPanel.add(wykres);
-        myPanel.add(container);
-        myPanel.add(wzor);
-
-        wzor.setSize(20, 20);
-
-//        container.setLayout(new GridLayout(1,4));
         container.add(xmin);
         container.add(xmax);
         container.add(ymin);
         container.add(ymax);
+        container.setLayout(new GridLayout(1,4));
 
-        jFrame.setContentPane(myPanel);
-        jFrame.setDefaultCloseOperation(3);
+        jPanelEnd.add(container);
+        jPanelEnd.add(wzor);
+        jPanelEnd.setLayout(new GridLayout(2,1));
+
+
+        containerAll.setLayout(new BorderLayout());
+        containerAll.add(myPanel, BorderLayout.CENTER);
+        containerAll.add(jPanelEnd, BorderLayout.SOUTH);
+
+        this.setDefaultCloseOperation(3);
 
     }
 
