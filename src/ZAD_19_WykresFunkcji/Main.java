@@ -18,7 +18,11 @@ public class Main extends JFrame{
     }
 
     private int xmin, xmax, ymin, ymax;
+    private String wzorText;
     private List<Point> pointList = new ArrayList<>();
+//
+//
+//    MyPanel myPanel;
 
     private boolean checkNegative(String text){
         boolean test=false;
@@ -30,10 +34,22 @@ public class Main extends JFrame{
 
     private void createGUI(){
 
+
+//        pointList.add(new Point(-30, 30));
+//        pointList.add(new Point(-20, 20));
+//        pointList.add(new Point(-11, 10));
+//        pointList.add(new Point(0, 0));
+//        pointList.add(new Point(11, 10));
+//        pointList.add(new Point(20, 20));
+//        pointList.add(new Point(30, 30));
+
         MyPanel myPanel = new MyPanel(pointList);
+
+//        myPanel = new MyPanel(pointList);
         Container container = new Container();
         JPanel jPanelEnd = new JPanel();
         Container containerAll = getContentPane();
+
 
         JTextField xminTextField = new JTextField();
         JTextField xmaxTextField = new JTextField();
@@ -83,7 +99,7 @@ public class Main extends JFrame{
                         setValueXmin(Integer.parseInt(text));
                     }
                 } catch (StringIndexOutOfBoundsException ex){
-                    emptyJFieldEx();
+                    emptyJFieldEx("xmintf focus...");
                 }
 
 
@@ -113,7 +129,7 @@ public class Main extends JFrame{
                         setValueXmax(Integer.parseInt(text));
                     }
                 } catch (StringIndexOutOfBoundsException ex){
-                    emptyJFieldEx();
+                    emptyJFieldEx("xmaxtf focus...");
                 }
 
 
@@ -143,7 +159,7 @@ public class Main extends JFrame{
                         setValueYmin(Integer.parseInt(text));
                     }
                 } catch (StringIndexOutOfBoundsException ex){
-                    emptyJFieldEx();
+                    emptyJFieldEx("ymintf focus...");
                 }
 
 
@@ -173,13 +189,17 @@ public class Main extends JFrame{
                         setValueYmax(Integer.parseInt(text));
                     }
                 } catch (StringIndexOutOfBoundsException ex){
-                    emptyJFieldEx();
+                    emptyJFieldEx("ymaxtf focus...");
                 }
 
 
             }
 
+
+
         });
+
+        wzor.setText("5x^3+2x^2+1+5"); // dla testu
 
         wzor.addFocusListener(new FocusListener() {
             @Override
@@ -188,20 +208,31 @@ public class Main extends JFrame{
 
             @Override
             public void focusLost(FocusEvent e) {
-                String text = wzor.getText();
 
+
+                String text = wzor.getText(); // = wzor.getText();
 
                 try {
-                    operation(text);
+                    setWzorText(text);
+//                    setWzorText(wzor.getText());
+//                    text = wzor.getText();
+//                    setWzorText(text);
+//                    operation(text);
+                    System.out.println("wzor.focus try WT="+getWzorText());
+                    operation(getWzorText());
 
                 } catch (StringIndexOutOfBoundsException ex){
-                    emptyJFieldEx();
+                    emptyJFieldEx("wzor focus...");
                 }
 
 
             }
 
         });
+
+        System.out.println("after focus WT="+getWzorText());
+
+        operation(wzorText); // bez tego nie rysuje
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -220,6 +251,12 @@ public class Main extends JFrame{
         return test;
     }
 
+    private void setWzorText(String textCollect) {
+        this.wzorText = textCollect;
+    }
+    public String getWzorText(){
+        return wzorText;
+    }
     private void setValueXmin(int x){
         this.xmin = x;
     }
@@ -233,59 +270,60 @@ public class Main extends JFrame{
         this.ymax = x;
     }
 
-    private void emptyJFieldEx(){
-        System.out.println("Empty String");
+
+    private void emptyJFieldEx(String method){
+        System.out.println("Empty String "+method);
 //        System.out.println("Empty String - clear all values");
 //        setValueXmin(0); setValueXmax(0); setValueYmin(0); setValueYmax(0);
     }
 
-    private void operation(String text){
+    private void operation(String textCollect){
 
-        text = "5x^3+2x^2+1+5";
-
-        char[] charText = text.toCharArray();
-        List<String> smallOper= new ArrayList<String>();
-        boolean space = false;
-
-//        int[] tab = new int[10];
-
+        textCollect = "5x^3+2x^2+1+5";
         try {
 
 
-            for(int i=0; i<charText.length||(text.isEmpty()); i++){
+            char[] charText = textCollect.toCharArray();
+            List<String> smallOper = new ArrayList<String>();
+            boolean space = false;
 
-                if(i>0&&(charText[i]=='-'||charText[i]=='+')){
-                    space=true;
+//        int[] tab = new int[10];
+
+            try {
+
+
+                for (int i = 0; i < charText.length || (textCollect.isEmpty()); i++) {
+
+                    if (i > 0 && (charText[i] == '-' || charText[i] == '+')) {
+                        space = true;
+                    }
+
+
+                    if (space) {
+                        //                System.out.println();
+                        smallOper.add(textCollect.substring(0, i));
+                        textCollect = textCollect.substring(i);
+                        space = false;
+                        i = 1;
+                        charText = textCollect.toCharArray();
+                    }
+                    //            System.out.print(charText[i]);
+                }
+
+                System.out.println("Lista");
+                for (String s : smallOper) {
+                    System.out.println(s);
                 }
 
 
-
-                if (space) {
-                    //                System.out.println();
-                    smallOper.add(text.substring(0,i));
-                    text = text.substring(i);
-                    space = false;
-                    i=1;
-                    charText = text.toCharArray();
+                for (int i = -25; i < 25; i++) {
+                    pointList.add(new Point(i, sumOfAll(smallOper, i)));
                 }
-                //            System.out.print(charText[i]);
-            }
 
-            System.out.println("Lista");
-
-
-
-
-            for(String s: smallOper){
-                System.out.println(s);
-            }
-
-
-            for(int i=-25; i<25; i++){
-                pointList.add(new Point(i, sumOfAll(smallOper, i)));
-            }
-
-//            myPanel.setPointList(pointList);
+                for (Point point : pointList) {
+                    System.out.print("f(" + point.getX() + ")= ");
+                    System.out.println(point.getY());
+                }
 
 //            double y = sumOfAll(smallOper, 1);
 //            System.out.println(y);
@@ -293,41 +331,42 @@ public class Main extends JFrame{
 //            int x=1;
 //            int result = getSmallOperationValue(x, smallOper.get(4));
 //            int result = getSmallOperationValue(x, "-122");
-//            System.out.println(result);
+//            System.out.println("result"+result);
 
 
-
-
-        }catch (ArrayIndexOutOfBoundsException ex){
-            System.out.println("Empty list");
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                System.out.println("Empty list");
+            }
+        }catch (NullPointerException ex){
+            System.out.println("ex operation");
         }
 
 
     }
 
-    private int getSmallOperationValue(int x, String text){
-        boolean findX = text.contains("x");
-        boolean findXSqrt = text.contains("x^");
-        int result = 0;
-        char firstChar = text.charAt(0);
-
-        if(!findX){
-            if(firstChar>='0'&&firstChar<='9')
-                return Integer.valueOf(text);
-            else
-                result = Integer.valueOf(text.substring(1));
-
-        } else if(!findXSqrt){
-//            x
-
-        } else {
-//            x^
-
-        }
-
-        if(firstChar=='-') result = result*(-1);
-        return result;
-    }
+//    private int getSmallOperationValue(int x, String text){
+//        boolean findX = text.contains("x");
+//        boolean findXSqrt = text.contains("x^");
+//        int result = 0;
+//        char firstChar = text.charAt(0);
+//
+//        if(!findX){
+//            if(firstChar>='0'&&firstChar<='9')
+//                return Integer.valueOf(text);
+//            else
+//                result = Integer.valueOf(text.substring(1));
+//
+//        } else if(!findXSqrt){
+////            x
+//
+//        } else {
+////            x^
+//
+//        }
+//
+//        if(firstChar=='-') result = result*(-1);
+//        return result;
+//    }
 
     private static double doMath(int x, String tekst){
         if(tekst.contains("x")){
