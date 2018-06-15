@@ -20,6 +20,7 @@ public class Main extends JFrame{
     private int xmin, xmax, ymin, ymax;
     private String wzorText;
     private List<Point> pointList = new ArrayList<>();
+    private boolean first = true;
 //
 //
 //    MyPanel myPanel;
@@ -199,7 +200,7 @@ public class Main extends JFrame{
 
         });
 
-        wzor.setText("5x^3+2x^2+1+5"); // dla testu
+        wzor.setText("5x^3+2x^2+1+5"); // bez tego nie odswiezaja sie wartosci
 
         wzor.addFocusListener(new FocusListener() {
             @Override
@@ -214,12 +215,8 @@ public class Main extends JFrame{
 
                 try {
                     setWzorText(text);
-//                    setWzorText(wzor.getText());
-//                    text = wzor.getText();
-//                    setWzorText(text);
-//                    operation(text);
                     System.out.println("wzor.focus try WT="+getWzorText());
-                    operation(getWzorText());
+                    operation(getWzorText()); // bez tego wartosci w liscie sie nie odswiezaja
 
                 } catch (StringIndexOutOfBoundsException ex){
                     emptyJFieldEx("wzor focus...");
@@ -232,7 +229,7 @@ public class Main extends JFrame{
 
         System.out.println("after focus WT="+getWzorText());
 
-        operation(wzorText); // bez tego nie rysuje
+        operation(wzorText); // bez tego nie rysuje, bo lista nie jest przekazana do mypanel
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -279,7 +276,16 @@ public class Main extends JFrame{
 
     private void operation(String textCollect){
 
-        textCollect = "5x^3+2x^2+1+5";
+        System.out.println("operation pobrany wzor =" +textCollect);
+
+
+        if(first) {
+            textCollect = "5x^3+2x^2+1+5"; // bez tego nie pobiera wzoru
+            first = false;
+            System.out.println("operation podmieniony wzor =" +textCollect);
+        }
+
+
         try {
 
 
