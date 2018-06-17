@@ -5,8 +5,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-//TODO sortowanie elementow
-//TODO wywietlenie zaznaczonego elementu na konsoli
+//DONE sortowanie elementow
+//DONE wywietlenie zaznaczonego elementu na konsoli
 
 public class Main extends JFrame {
     public Main(){
@@ -33,8 +33,11 @@ public class Main extends JFrame {
 
         this.setContentPane(jPanel);
 
-
-        jTextField.addActionListener(e -> myModel.addElementList(jTextField.getText()));
+        jTextField.addActionListener(e -> {
+            myModel.addElementList(jTextField.getText());
+            myModel.sortList();
+            jTextField.setText("");
+        });
 
         jList.addMouseListener(new MouseAdapter() {
             @Override
@@ -43,6 +46,10 @@ public class Main extends JFrame {
                 if(e.getClickCount()==2){
                     int index = list.locationToIndex(e.getPoint());
                     myModel.deleteElem(index);
+                }
+                if(e.getClickCount()==1){
+                    int index = list.locationToIndex(e.getPoint());
+                    System.out.println(myModel.getElementAt(index));
                 }
             }
         });
@@ -54,7 +61,7 @@ public class Main extends JFrame {
     private JPanel jPanel = new JPanel();
     private JTextField jTextField = new JTextField();
     private MyModel myModel = new MyModel();
-    private JList jList = new JList(myModel);
+    private JList<String> jList = new JList<>(myModel);
     private JScrollPane jScrollPane = new JScrollPane(jList);
 
 

@@ -2,6 +2,7 @@ package ZAD_21_AddElemJListMVC;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MyModel extends AbstractListModel<String> {
@@ -21,6 +22,10 @@ public class MyModel extends AbstractListModel<String> {
     public void deleteElem(int index){
         stringList.remove(index);
         fireContentsChanged(this, 0, stringList.size());
+    }
+
+    public void sortList(){
+        Collections.sort(stringList);
     }
 
     @Override
