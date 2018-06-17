@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+//TODO sortowanie elementow
+//TODO wywietlenie zaznaczonego elementu na konsoli
+
 public class Main extends JFrame {
     public Main(){
         initcomponents();
