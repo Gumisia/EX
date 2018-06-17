@@ -24,7 +24,7 @@ public class MyModel extends AbstractListModel {
         today = LocalDate.now();
 
         //TESTS
-//        today = today.plusMonths(1); //31 DNI
+//        today = today.plusMonths(1); //31 DNI - LIPIEC 2018
 //        today = today.minusMonths(4); //28 DNI - LUTY 2018
 //        today = today.minusMonths(4).minusYears(2); //29 DNI - LUTY 2016
 
