@@ -7,7 +7,7 @@ import java.util.List;
 public class MyModel extends AbstractListModel<String> {
 
 
-    List<String> stringList;
+    private List<String> stringList;
 
     MyModel(){
         stringList = new ArrayList<>();
@@ -15,6 +15,11 @@ public class MyModel extends AbstractListModel<String> {
 
     public void addElementList(String text){
         stringList.add(text);
+        fireContentsChanged(this, 0, stringList.size());
+    }
+
+    public void deleteElem(int index){
+        stringList.remove(index);
         fireContentsChanged(this, 0, stringList.size());
     }
 
@@ -27,4 +32,6 @@ public class MyModel extends AbstractListModel<String> {
     public String getElementAt(int index) {
         return stringList.get(index);
     }
+
+
 }

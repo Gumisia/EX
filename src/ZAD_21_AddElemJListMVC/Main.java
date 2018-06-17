@@ -2,6 +2,8 @@ package ZAD_21_AddElemJListMVC;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Main extends JFrame {
     public Main(){
@@ -16,6 +18,9 @@ public class Main extends JFrame {
         jList.setVisibleRowCount(9);
         jList.setFixedCellWidth(280);
 
+        jList.setSelectionBackground(Color.YELLOW);
+        jList.setSelectionForeground(Color.RED);
+
         jPanel.setLayout(new BorderLayout());
 
         jPanel.add(jTextField, BorderLayout.PAGE_START);
@@ -27,6 +32,17 @@ public class Main extends JFrame {
 
 
         jTextField.addActionListener(e -> myModel.addElementList(jTextField.getText()));
+
+        jList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JList list = (JList)e.getSource();
+                if(e.getClickCount()==2){
+                    int index = list.locationToIndex(e.getPoint());
+                    myModel.deleteElem(index);
+                }
+            }
+        });
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
