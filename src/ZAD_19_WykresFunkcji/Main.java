@@ -200,7 +200,7 @@ public class Main extends JFrame{
 
         });
 
-        wzor.setText("5x^3+2x^2+1+5"); // bez tego nie odswiezaja sie wartosci
+        wzor.setText("5x^3+2x^2+1+5");
 
         wzor.addFocusListener(new FocusListener() {
             @Override
@@ -270,20 +270,19 @@ public class Main extends JFrame{
 
     private void emptyJFieldEx(String method){
         System.out.println("Empty String "+method);
-//        System.out.println("Empty String - clear all values");
-//        setValueXmin(0); setValueXmax(0); setValueYmin(0); setValueYmax(0);
     }
 
     private void operation(String textCollect){
 
-        System.out.println("operation pobrany wzor =" +textCollect);
+
 
 
         if(first) {
             textCollect = "5x^3+2x^2+1+5"; // bez tego nie pobiera wzoru
             first = false;
             System.out.println("operation podmieniony wzor =" +textCollect);
-        }
+        }else
+            System.out.println("operation pobrany wzor =" +textCollect);
 
 
         try {
@@ -292,8 +291,6 @@ public class Main extends JFrame{
             char[] charText = textCollect.toCharArray();
             List<String> smallOper = new ArrayList<String>();
             boolean space = false;
-
-//        int[] tab = new int[10];
 
             try {
 
@@ -306,14 +303,12 @@ public class Main extends JFrame{
 
 
                     if (space) {
-                        //                System.out.println();
                         smallOper.add(textCollect.substring(0, i));
                         textCollect = textCollect.substring(i);
                         space = false;
                         i = 1;
                         charText = textCollect.toCharArray();
                     }
-                    //            System.out.print(charText[i]);
                 }
 
                 System.out.println("Lista");
@@ -326,19 +321,10 @@ public class Main extends JFrame{
                     pointList.add(new Point(i, sumOfAll(smallOper, i)));
                 }
 
-                for (Point point : pointList) {
-                    System.out.print("f(" + point.getX() + ")= ");
-                    System.out.println(point.getY());
-                }
-
-//            double y = sumOfAll(smallOper, 1);
-//            System.out.println(y);
-
-//            int x=1;
-//            int result = getSmallOperationValue(x, smallOper.get(4));
-//            int result = getSmallOperationValue(x, "-122");
-//            System.out.println("result"+result);
-
+//                for (Point point : pointList) {
+//                    System.out.print("f(" + point.getX() + ")= ");
+//                    System.out.println(point.getY());
+//                }
 
             } catch (ArrayIndexOutOfBoundsException ex) {
                 System.out.println("Empty list");
@@ -350,29 +336,6 @@ public class Main extends JFrame{
 
     }
 
-//    private int getSmallOperationValue(int x, String text){
-//        boolean findX = text.contains("x");
-//        boolean findXSqrt = text.contains("x^");
-//        int result = 0;
-//        char firstChar = text.charAt(0);
-//
-//        if(!findX){
-//            if(firstChar>='0'&&firstChar<='9')
-//                return Integer.valueOf(text);
-//            else
-//                result = Integer.valueOf(text.substring(1));
-//
-//        } else if(!findXSqrt){
-////            x
-//
-//        } else {
-////            x^
-//
-//        }
-//
-//        if(firstChar=='-') result = result*(-1);
-//        return result;
-//    }
 
     private static double doMath(int x, String tekst){
         if(tekst.contains("x")){
