@@ -10,7 +10,7 @@ public class MyModel extends AbstractListModel<String> {
 
     private List<String> stringList;
 
-    MyModel(){
+    public MyModel(){
         stringList = new ArrayList<>();
     }
 
