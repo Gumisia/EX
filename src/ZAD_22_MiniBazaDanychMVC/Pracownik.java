@@ -11,8 +11,6 @@ public class Pracownik {
 
     Object[] tab;
 
-
-
     int nowYear;
 
 

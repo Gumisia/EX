@@ -9,12 +9,12 @@ public class MyTableModel extends AbstractTableModel {
 
     private String[] columns = {"Imię", "Nazwisko", "Wiek", "Stanowisko", "Rocznik"};
 
-    Pracownik pracownik1 = new Pracownik("Jan", "Kowalski", "Kierownik", 1974);
-    Pracownik pracownik2 = new Pracownik("Maria", "Nowacka", "Sprzedawca", 1988);
-    Pracownik pracownik3 = new Pracownik("Ewa", "Kowalska", "Doradca", 1979);
-    Pracownik pracownik4 = new Pracownik("Marek", "Nowacki",  "Asystent", 1990);
+    private Pracownik pracownik1 = new Pracownik("Jan", "Kowalski", "Kierownik", 1974);
+    private Pracownik pracownik2 = new Pracownik("Maria", "Nowacka", "Sprzedawca", 1988);
+    private Pracownik pracownik3 = new Pracownik("Ewa", "Kowalska", "Doradca", 1979);
+    private Pracownik pracownik4 = new Pracownik("Marek", "Nowacki",  "Asystent", 1990);
 
-    private Object[][] data = {
+    private Object[][] data = new Object[][]{
             pracownik1.getTab(), pracownik2.getTab(), pracownik3.getTab(), pracownik4.getTab()
     };
 
@@ -49,20 +49,16 @@ public class MyTableModel extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        if(columnIndex==2){
-            return false;
-        }else {
-            return true;
-        }
+        return columnIndex != 2;
     }
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         if(DEBUG){
-            System.out.printf("Setting value at"+rowIndex+","+columnIndex
-                    +" to "+aValue
-                    +" (an istance of "
-                    + aValue.getClass()+")");
+            System.out.print("Setting value at" + rowIndex + "," + columnIndex
+                    + " to " + aValue
+                    + " (an istance of "
+                    + aValue.getClass() + ")");
         }
 
         data[rowIndex][columnIndex] = aValue;
@@ -70,7 +66,7 @@ public class MyTableModel extends AbstractTableModel {
         fireTableCellUpdated(rowIndex, columnIndex);
 
         if(DEBUG){
-            System.out.printf("New value of data: ");
+            System.out.print("New value of data: ");
             printDebugData();
         }
     }

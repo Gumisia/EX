@@ -16,6 +16,8 @@ public class Main
 
     private void createGUI(){
 
+        //test
+
         JTextField xMin = new JTextField();
         JTextField xMax = new JTextField();
         JTextField yMin = new JTextField();
